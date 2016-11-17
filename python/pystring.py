@@ -12,7 +12,6 @@ def get_dictionary_counting_all_chars_of(str):
 
 def reverse(str):
     return str[::-1]
-    pass
 
 
 def is_a_palindrome(string: str) -> bool:
