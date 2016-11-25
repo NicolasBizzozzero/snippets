@@ -39,7 +39,7 @@ def dupe_file(path_to_file, name_of_the_dupe_file):
     overwrite_stuff_in_a_file(content, name_of_the_dupe_file)
 
 
-def getline(file: str, line_number: int) -> str:
+def get_line(file: str, line_number: int) -> str:
     """Return the content of file at the line
         indicated by line_number.
     """
@@ -55,4 +55,4 @@ def getline(file: str, line_number: int) -> str:
 
 
 if __name__ == '__main__':
-    pass
+    print_file_content("pyutils.py")

@@ -1,5 +1,6 @@
 from re import findall, compile
 
+
 def count_chars(string):
     char_dic = {}
     for char in string:
@@ -8,6 +9,7 @@ def count_chars(string):
         else:
             char_dic[char] = 1
     return char_dic
+
 
 def count_words(string):
     if not string:
@@ -18,7 +20,8 @@ def count_words(string):
     words_dic = {}
 
     return words_dic
-    
+
+
 def lower_chars_of_dict(dict):
     chars_to_lower = "ABCDEFGHIJKLMNOPQRSTUVWXZ"
     for char in chars_to_lower:
@@ -28,7 +31,8 @@ def lower_chars_of_dict(dict):
             else:
                 dict[char.lower()] = dict[char]
             del dict[char]
-            
+
+
 def upper_chars_of_dict(dict):
     chars_to_upper = "abcdefghijklmnopqrstuvwxyz"
     for char in chars_to_upper:
@@ -38,11 +42,13 @@ def upper_chars_of_dict(dict):
             else:
                 dict[char.upper()] = dict[char]
             del dict[char]
-            
+
+
 def delete_chars_from_dict(chars_to_delete, dict):
     for char in chars_to_delete:
         if char in dict.keys():
             del dict[char]
+
 
 def delete_strings_from_dict(iterable_of_strings, dict):
     for string in iterable_of_strings:
