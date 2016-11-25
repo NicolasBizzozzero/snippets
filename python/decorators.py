@@ -1,3 +1,6 @@
+from sys import setrecursionlimit, getrecursionlimit
+
+
 def timethis(function):
     def wrapper(*arg):
         from time import time
@@ -33,7 +36,11 @@ def printcallingending(function):
     return wrapper
 
 
-def cachethis(funcion):
+def memoize(funcion):
+    """ Caches a function's return value each
+        time it is called. If called later with the same
+        arguments, the cached value is returned.
+    """
     cache = {}
     miss = object()
 
@@ -44,6 +51,17 @@ def cachethis(funcion):
             # Else, we call the original function and cache it's result
             result = funcion(*args)
             cache[args] = result
+        return result
+    return wrapper
+
+
+@todo_implement
+def changestackdepth(function: callable, newsize: int):
+    def wrapper(*args):
+        oldsize = getrecursionlimit()
+        setrecursionlimit(newsize)
+        result = function(args[0])
+        setrecursionlimit(oldsize)
         return result
     return wrapper
 
@@ -102,17 +120,10 @@ def todo_split_function():
 
 
 if __name__ == '__main__':
-    @timethis
-    def is_even(n: int) -> bool:
-        return (n % 2 == 0)
+    @changestackdepth(1000, 1000)
+    def fibo(n: int):
+        if n == 0 or n == 1:
+            return 1
+        return fibo(n - 1) + fibo(n - 2)
 
-    @timethis
-    def is_even_bin(n: int) -> bool:
-        return (bin(n)[-1] == '0')
-
-    print(is_even(1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000))
-    print(is_even_bin(
-        1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000))
-    print(is_even(1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001))
-    print(is_even_bin(
-        1000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001))
+    print(fibo(10))
