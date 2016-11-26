@@ -1,12 +1,21 @@
  #include <stdio.h>
 
-void swap(int* a, int* b){
+/**
+ * Swap the values located at the two adresses a and b.
+ * This method uses a temporary variable.
+ */
+void swap(int* const a, int* const b){
 	int tmp = *a;
 	*a = *b;
 	*b = tmp;
 }
 
-void add_swap(int* a, int* b){
+
+/**
+ * Swap the values located at the two adresses a and b.
+ * This method doesn't use a temporary variable.
+ */
+void add_swap(int* const a, int* const b){
 	// If a and b are located at the same adress, their value will be set to 0
 	if (a == b)
 		return;
@@ -16,7 +25,12 @@ void add_swap(int* a, int* b){
 	*a = *a - *b;
 }
 
-void xor_swap(int* a, int* b){
+
+/**
+ * Swap the values located at the two adresses a and b.
+ * This method doesn't use a temporary variable.
+ */
+void xor_swap(int* const a, int* const b){
 	// If a and b are located at the same adress, their value will be set to 0
 	if (a == b)
 		return;
@@ -26,7 +40,8 @@ void xor_swap(int* a, int* b){
 	*a = *a ^ *b;	// a = a XOR b
 }
 
-int main(){
+
+int main(int argc, char** argv){
 	int a = 4;
 	int b = 8;
 

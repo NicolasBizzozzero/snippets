@@ -1,5 +1,6 @@
 from math import gcd, sqrt
-
+from nbu_decorators import todo_implement
+from random import randint, random
 
 def are_coprime(a: int, b: int) -> bool:
     """ Return True if a is coprime with b, False otherwise.
@@ -49,7 +50,7 @@ def generate_primes_in_range(floor: int, ceil: int) -> list:
     """ Return a list of all primes in the range(floor, ceil).
         Written by PM 2Ring 2014.10.15
     """
-    def potential_primes():
+    def potential_primes() -> iter:
         """ Make a generator for 2, 3, 5, & thence all
             numbers coprime to 30.
         """
@@ -104,6 +105,20 @@ def get_number_of_divisors_of(n: int) -> int:
         if is_divisible_by(n, i):
             numberOfDivisors += 2
     return numberOfDivisors
+
+
+def get_random_float(floor: float, ceil: float) -> float:
+    """ Return a random float between 'floor' inclusive and 'ceil'
+        exclusive.
+    """
+    return (random() * (ceil - floor)) + floor
+
+
+def get_random_integer(floor: int, ceil: int) -> int:
+    """ Return a random integer between 'floor' inclusive and 'ceil'
+        exclusive.
+    """
+    return randint(floor, ceil)
 
 
 def is_a_palindrome(string: str) -> bool:
@@ -168,6 +183,7 @@ def lcm(a: int, b: int) -> int:
     return int((a * b) / gcd(a, b))
 
 
+@todo_implement
 def get_all_coprime_with(n: int) -> list:
     """ Return a list containing all the positive
         integers who are coprime with b.
@@ -210,7 +226,7 @@ def get_product_of_primes_factors_form_of(n: int) -> list:
     return primes_factor
 
 
-def print_product_of_primes_factors_form_of(n: int):
+def print_product_of_primes_factors_form_of(n: int) -> None:
     """ This function is meant to be used with the
         get_product_of_primes_factors_form_of function.
         It print the dictionary the previous function return as
