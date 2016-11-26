@@ -2,6 +2,7 @@ from math import gcd, sqrt
 from nbu_decorators import todo_implement
 from random import randint, random
 
+
 def are_coprime(a: int, b: int) -> bool:
     """ Return True if a is coprime with b, False otherwise.
         a and b are said to be coprime, or mutually prime if

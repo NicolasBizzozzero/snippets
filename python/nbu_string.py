@@ -42,8 +42,8 @@ def remove_chars(string: str, chars_to_remove: str) -> str:
     return new_string
 
 
-def remove_chars_which_are_not_letters(string: str, keep_numbers=True,
-                                       keep_whitespaces=True) -> str:
+def remove_chars_which_are_not_letters(string: str, keep_numbers: bool = True,
+                                       keep_whitespaces: bool = True) -> str:
     """ Return only the chars contained in string.
         Example :
         >>> remove_chars_which_are_not_letters("Hello, World!")
@@ -78,16 +78,18 @@ def remove_char_at(string: str, index: int) -> str:
 
 def is_a_palindrome(string: str) -> bool:
     """ Return True if string is a palindrome, False otherwise.
-        A palindrome is a string who can be read the same both
-        ways by ignoring punctuation, whitespaces and the case
-        of the chars.
+        A palindrome is a string who can be read the same both ways by
+        ignoring punctuation, whitespaces and the case of the chars.
         Example :
         >>> is_a_palindrome("As I pee, sir, I see Pisa !")
         True
         >>> is_a_palindrome("I am not.")
         False
     """
-    return remove_chars_which_are_not_letters(string, True, False).lower() == ''.join(reversed(remove_chars_which_are_not_letters(string, True, False)).lower())
+    return remove_chars_which_are_not_letters(string, True, False).lower() ==\
+        ''.join(reversed(remove_chars_which_are_not_letters(string,
+                                                            True,
+                                                            False)).lower())
 
 
 def concatenation(string1: str, string2: str) -> str:
