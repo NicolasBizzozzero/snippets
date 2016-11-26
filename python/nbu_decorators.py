@@ -39,6 +39,26 @@ def todo_refactor(function: callable) -> callable:
     return wrapper
 
 
+@todo_implement
+def todo_clean():
+    pass
+
+
+@todo_implement
+def todo_comment():
+    pass
+
+
+@todo_implement
+def todo_split_function():
+    pass
+
+
+@todo_implement
+def todo_write_documentation():
+    pass
+
+
 def print_warning(*reasons: str) -> callable:
     """ Print a list of reasons as why executing this function is unsafe.
         This act as a warning for dangerous functions or not correctly
@@ -93,6 +113,85 @@ def count_invocations(function: callable) -> callable:
     return wrapper
 
 
+def print_result(function: callable) -> callable:
+    """ Print the call of the wrapped function followed by its result.
+        Example :
+        >>> fibo(6)
+        fibo(6) : 8
+        >>> add(4, 18)
+        add(4, 18) : 22
+
+    """
+    def wrapper(*args):
+        from nbu_string import concatenation
+        result = function(*args)
+        # Remove the useless coma if there is just one argument
+        arg_or_args = None
+        if len(args) == 1:
+            arg_or_args = concatenation(str(args)[:-2], ')')
+        else:
+            arg_or_args = args
+        print("{}{} : {}".format(function.__name__, arg_or_args, result))
+        return result
+    return wrapper
+
+
+def print_calling_ending(function: callable) -> callable:
+    """ Print a message before and after calling a function.
+        It assures the function has been successfully called.
+        Example :
+        >>> @print_calling_ending
+        >>> def add(a, b) -> int:
+        >>>     print("I'm in the function !")
+        >>>     return a + b
+        >>> add(4, 18)
+        Calling "add(4, 18)"
+        I'm in the function !
+        Ending  "add(4, 18)"
+
+    """
+    def wrapper(*args):
+        print("Calling \"{}{}\"".format(function.__name__, args))
+        result = function(*args)
+        print("Ending  \"{}{}\"".format(function.__name__, args))
+        return result
+    return wrapper
+
+
+def memoize(function: callable) -> callable:
+    """ Caches a function's return value each time it is called.
+        If called later with the same  arguments, the cached value is returned.
+    """
+    cache = {}
+    miss = object()
+
+    def wrapper(*args):
+        # If the result as already be calculated, it's a hit
+        result = cache.get(args, miss)
+        if result is miss:
+            # Else, we call the original function and cache it's result
+            result = function(*args)
+            cache[args] = result
+        return result
+    return wrapper
+
+
+def change_stack_depth(new_size: int) -> callable:
+    """ Change the recursion limit to new_size before calling the function,
+        then reset its original value after calling the function.
+    """
+    def real_decorator(function: callable) -> callable:
+        def wrapper(*args):
+            from sys import setrecursionlimit, getrecursionlimit
+            old_size = getrecursionlimit()
+            setrecursionlimit(new_size)
+            result = function(*args)
+            setrecursionlimit(old_size)
+            return result
+        return wrapper
+    return real_decorator
+
+
 @todo_implement
 def force_typing(function: callable, *types: type) -> callable:
     """ Throw an exception if the types of the args are differents the types
@@ -104,6 +203,16 @@ def force_typing(function: callable, *types: type) -> callable:
         # Instructions here will be executed after calling the function
         return result
     return wrapper
+
+
+@todo_implement
+def get_input_from_file():
+    pass
+
+
+@todo_implement
+def redirect_output_to_file():
+    pass
 
 
 if __name__ == '__main__':
