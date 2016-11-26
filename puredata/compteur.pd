@@ -1,0 +1,24 @@
+#N canvas 701 169 450 299 10;
+#X obj 143 10 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X floatatom 147 270 5 0 0 0 - - -, f 5;
+#X msg 199 10 reset;
+#N canvas 282 187 450 300 compteur 0;
+#X obj 207 125 + 1;
+#X msg 206 97 0;
+#X obj 147 123 int;
+#X obj 51 106 loadbang;
+#X obj 138 18 inlet;
+#X obj 231 35 inlet;
+#X obj 186 244 outlet;
+#X connect 0 0 2 1;
+#X connect 1 0 2 0;
+#X connect 2 0 0 0;
+#X connect 2 0 6 0;
+#X connect 3 0 2 0;
+#X connect 4 0 2 0;
+#X connect 5 0 1 0;
+#X restore 148 123 pd compteur;
+#X connect 0 0 3 0;
+#X connect 2 0 3 1;
+#X connect 3 0 1 0;
