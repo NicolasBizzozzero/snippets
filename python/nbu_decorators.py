@@ -44,6 +44,28 @@ def decorator_example(function: callable) -> callable:
     return wrapper
 
 
+def force_typing(*types: type) -> callable:
+    """ Throw an exception if the types in the args are differents than the
+        types in 'types'.
+    """
+    class WrongParameter(Exception):
+        def __init__(self, message):
+            # Call the base class constructor with the parameters it needs
+            super(WrongParameter, self).__init__(message)
+
+    def real_decorator(function: callable) -> callable:
+        def wrapper(*args, **kwargs):
+            if len(args) >= 1:
+                for arg in args:
+                    if type(arg) not in types:
+                        raise WrongParameter(("\"{}\" is of type \"{}\" while "
+                                              "not being allowed to."
+                                              ).format(arg, type(arg)))
+            return function(*args, **kwargs)
+        return wrapper
+    return real_decorator
+
+
 def ignore_exception(function: callable) -> callable:
     """ If an exception is throwed, it will be ignored. """
     def wrapper(*args, **kwargs):
@@ -68,6 +90,49 @@ def memoize(function: callable) -> callable:
             # Else, we call the original function and cache it's result
             result = function(*args, **kwargs)
             cache[args] = result
+        return result
+    return wrapper
+
+
+def print_calling_ending(function: callable) -> callable:
+    """ Print a message before and after calling a function.
+        It assures the function has been successfully called.
+        Example :
+        >>> @print_calling_ending
+        >>> def add(a, b) -> int:
+        >>>     print("I'm in the function !")
+        >>>     return a + b
+        >>> add(4, 18)
+        Calling "add(4, 18)"
+        I'm in the function !
+        Ending  "add(4, 18)"
+    """
+    def wrapper(*args, **kwargs):
+        print("Calling \"{}{}\"".format(function.__name__, args))
+        result = function(*args, **kwargs)
+        print("Ending  \"{}{}\"".format(function.__name__, args))
+        return result
+    return wrapper
+
+
+def print_result(function: callable) -> callable:
+    """ Print the call of the wrapped function followed by its result.
+        Example :
+        >>> fibo(6)
+        fibo(6) : 8
+        >>> add(4, 18)
+        add(4, 18) : 22
+    """
+    def wrapper(*args, **kwargs):
+        from nbu_string import concatenation
+        result = function(*args, **kwargs)
+        # Remove the useless coma if there is just one argument
+        arg_or_args = None
+        if len(args) == 1:
+            arg_or_args = concatenation(str(args)[:-2], ')')
+        else:
+            arg_or_args = args
+        print("{}{} : {}".format(function.__name__, arg_or_args, result))
         return result
     return wrapper
 
@@ -192,59 +257,16 @@ def todo_write_documentation(function: callable) -> callable:
     return wrapper
 
 
-def print_calling_ending(function: callable) -> callable:
-    """ Print a message before and after calling a function.
-        It assures the function has been successfully called.
-        Example :
-        >>> @print_calling_ending
-        >>> def add(a, b) -> int:
-        >>>     print("I'm in the function !")
-        >>>     return a + b
-        >>> add(4, 18)
-        Calling "add(4, 18)"
-        I'm in the function !
-        Ending  "add(4, 18)"
-    """
-    def wrapper(*args, **kwargs):
-        print("Calling \"{}{}\"".format(function.__name__, args))
-        result = function(*args, **kwargs)
-        print("Ending  \"{}{}\"".format(function.__name__, args))
-        return result
-    return wrapper
-
-
-def print_result(function: callable) -> callable:
-    """ Print the call of the wrapped function followed by its result.
-        Example :
-        >>> fibo(6)
-        fibo(6) : 8
-        >>> add(4, 18)
-        add(4, 18) : 22
-    """
-    def wrapper(*args, **kwargs):
-        from nbu_string import concatenation
-        result = function(*args, **kwargs)
-        # Remove the useless coma if there is just one argument
-        arg_or_args = None
-        if len(args) == 1:
-            arg_or_args = concatenation(str(args)[:-2], ')')
-        else:
-            arg_or_args = args
-        print("{}{} : {}".format(function.__name__, arg_or_args, result))
-        return result
-    return wrapper
-
-
-def set_stdout_to_file(new_stdout: str, mode: str = 'w') -> callable:
-    """ Temporary change stdout to the file value passed as argument. """
+def set_stdin_from_file(new_stdin: str, mode: str = 'r') -> callable:
+    """ Temporary change stdin to the file value passed as argument. """
     def real_decorator(function: callable) -> callable:
-        def wrapper(*args):
+        def wrapper(*args, **kwargs):
             import sys
 
-            previous_stdout = sys.stdout
-            sys.stdout = open(new_stdout, mode)
-            result = function(*args)
-            sys.stdout = previous_stdout
+            previous_stdin = sys.stdin
+            sys.stdin = open(new_stdin, mode)
+            result = function(*args, **kwargs)
+            sys.stdin = previous_stdin
             return result
         return wrapper
     return real_decorator
@@ -253,45 +275,32 @@ def set_stdout_to_file(new_stdout: str, mode: str = 'w') -> callable:
 def set_stdin_from_str(new_stdin: str) -> callable:
     """ Temporary change stdin to the string value passed as argument. """
     def real_decorator(function: callable) -> callable:
-        def wrapper(*args):
+        def wrapper(*args, **kwargs):
             import sys
             from io import StringIO
 
             previous_stdin = sys.stdin
             sys.stdin = StringIO(new_stdin)
-            result = function(*args)
+            result = function(*args, **kwargs)
             sys.stdin = previous_stdin
             return result
         return wrapper
     return real_decorator
 
 
-def set_stdin_from_file(new_stdin: str, mode: str = 'r') -> callable:
-    """ Temporary change stdin to the file value passed as argument. """
+def set_stdout_to_file(new_stdout: str, mode: str = 'w') -> callable:
+    """ Temporary change stdout to the file value passed as argument. """
     def real_decorator(function: callable) -> callable:
-        def wrapper(*args):
+        def wrapper(*args, **kwargs):
             import sys
 
-            previous_stdin = sys.stdin
-            sys.stdin = open(new_stdin, mode)
-            result = function(*args)
-            sys.stdin = previous_stdin
+            previous_stdout = sys.stdout
+            sys.stdout = open(new_stdout, mode)
+            result = function(*args, **kwargs)
+            sys.stdout = previous_stdout
             return result
         return wrapper
     return real_decorator
-
-
-@todo_implement
-def force_typing(function: callable, *types: type) -> callable:
-    """ Throw an exception if the types in the args are differents than the
-        types in 'types'.
-    """
-    def wrapper(*args, **kwargs):
-        # Instructions here will be executed before calling the function
-        result = function(*args, **kwargs)
-        # Instructions here will be executed after calling the function
-        return result
-    return wrapper
 
 
 if __name__ == '__main__':
