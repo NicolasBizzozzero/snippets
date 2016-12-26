@@ -1,3 +1,27 @@
+def _decorator_example(function: callable) -> callable:
+    """ This decorator serve as an example of how you can write decorators. """
+    def wrapper(*args, **kwargs):
+        # Instructions here will be executed before calling the function
+        result = function(*args, **kwargs)
+        # Instructions here will be executed after calling the function
+        return result
+    return wrapper
+
+
+def _decorator_example_with_parameter(param1, param2) -> callable:
+    """ This decorator serve as an example of how you can write decorators
+        with parameters.
+    """
+    def real_decorator(function: callable) -> callable:
+        def wrapper(*args, **kwargs):
+            # Instructions here will be executed before calling the function
+            result = function(*args, **kwargs)
+            # Instructions here will be executed after calling the function
+            return result
+        return wrapper
+    return real_decorator
+
+
 def change_stack_depth(new_size: int) -> callable:
     """ Change the recursion limit to new_size before calling the function,
         then reset its original value after calling the function.
@@ -31,16 +55,6 @@ def count_invocations(function: callable) -> callable:
         wrapper.invocations += 1
         function(*args, **kargs)
     wrapper.invocations = 0
-    return wrapper
-
-
-def decorator_example(function: callable) -> callable:
-    """ This decorator serve as an example of how you can write decorators. """
-    def wrapper(*args, **kwargs):
-        # Instructions here will be executed before calling the function
-        result = function(*args, **kwargs)
-        # Instructions here will be executed after calling the function
-        return result
     return wrapper
 
 
@@ -78,7 +92,7 @@ def ignore_exception(function: callable) -> callable:
 
 def memoize(function: callable) -> callable:
     """ Caches a function's return value each time it is called.
-        If called later with the same  arguments, the cached value is returned.
+        If called later with the same arguments, the cached value is returned.
     """
     cache = {}
     miss = object()
@@ -108,9 +122,14 @@ def print_calling_ending(function: callable) -> callable:
         Ending  "add(4, 18)"
     """
     def wrapper(*args, **kwargs):
-        print("Calling \"{}{}\"".format(function.__name__, args))
-        result = function(*args, **kwargs)
-        print("Ending  \"{}{}\"".format(function.__name__, args))
+        if len(args) == 1:
+            print("Calling \"{}({})\"".format(function.__name__, args[0]))
+            result = function(*args, **kwargs)
+            print("Ending  \"{}({})\"".format(function.__name__, args[0]))
+        else:
+            print("Calling \"{}{}\"".format(function.__name__, args))
+            result = function(*args, **kwargs)
+            print("Ending  \"{}{}\"".format(function.__name__, args))
         return result
     return wrapper
 
