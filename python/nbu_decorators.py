@@ -285,6 +285,7 @@ def set_stdin_from_file(new_stdin: str, mode: str = 'r') -> callable:
             previous_stdin = sys.stdin
             sys.stdin = open(new_stdin, mode)
             result = function(*args, **kwargs)
+            sys.stdin.close()
             sys.stdin = previous_stdin
             return result
         return wrapper
@@ -301,6 +302,7 @@ def set_stdin_from_str(new_stdin: str) -> callable:
             previous_stdin = sys.stdin
             sys.stdin = StringIO(new_stdin)
             result = function(*args, **kwargs)
+            sys.stdin.close()
             sys.stdin = previous_stdin
             return result
         return wrapper
@@ -316,6 +318,7 @@ def set_stdout_to_file(new_stdout: str, mode: str = 'w') -> callable:
             previous_stdout = sys.stdout
             sys.stdout = open(new_stdout, mode)
             result = function(*args, **kwargs)
+            sys.stdout.cose()
             sys.stdout = previous_stdout
             return result
         return wrapper

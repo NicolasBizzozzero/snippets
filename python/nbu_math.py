@@ -1,6 +1,9 @@
-from math import gcd, sqrt
-from nbu_decorators import todo_implement
+from math import gcd, sqrt, factorial, cos, sin, tan, exp, log
+from nbu_decorators import *
 from random import randint, random
+
+
+pi = 3.141592653589793238462643383279502884197169399375105820974944592307816406
 
 
 def are_coprime(a: int, b: int) -> bool:
@@ -9,6 +12,60 @@ def are_coprime(a: int, b: int) -> bool:
         the only positive integer that divide both of them is 1.
     """
     return gcd(a, b) == 1
+
+
+# def cos(x: float) -> float:
+#     """ Return the cosine of x radians. """
+#     # The value of an angle can't be greater than 2*pi
+#     angle = x % (2 * pi)
+
+#     # Remarquable angles
+#     if angle == 0:
+#         return 1
+#     elif angle == pi / 2:
+#         return 0
+#     elif angle == pi:
+#         return -1
+#     elif angle == (3 * pi) / 2:
+#         return 0
+
+#     if angle > pi:
+#         angle = -angle
+
+#     # Computation with the Taylor serie of cos(x)
+#     result = 0
+#     for n in range(16):
+#         result += (((-1)**n) / factorial(2 * n)) * (angle**(2 * n))
+#     return result
+
+
+# def exp(x: float) -> float:
+#     """ Return e**x. """
+#     if x == 0:
+#         return 1
+
+#     # Computation with the Taylor serie of exp(x)
+#     result = 0
+#     for n in range((x + 15) * 2):
+#         result += (x**n) / (factorial(n))
+#     return result
+
+
+# def factorial(n: int) -> int:
+#     """ Return the factorial of a number.
+#         Raises ValueError if n is not integral or is negative.
+#     """
+#     if (n < 0) or (type(n) is not int):
+#         raise ValueError
+
+#     if n == 0:
+#         return 0
+
+#     product = 1
+#     while n != 1:
+#         product *= n
+#         n -= 1
+#     return product
 
 
 def fibonacci(n: int) -> int:
@@ -20,6 +77,9 @@ def fibonacci(n: int) -> int:
         This function use a formula to approximate the n-th value of the
         Fibonacci serie.
     """
+    if n < 0:
+        raise ValueError(("fibonacci takes a positive integer as input,"
+                          " you passed {}.").format(n))
     sqrt_5 = sqrt(5)
     return round(
         (pow((1 + sqrt_5) / 2, n) -
@@ -168,20 +228,73 @@ def is_prime(n: int) -> bool:
         of CPU's power because the formula is not
         calculated for each iteration.
     """
-    if (n == 1 or (is_even(n) and n != 2)):
+    if (n <= 1 or (is_even(n) and n != 2)):
         return False
-    i = 3
+    divisor = 3
     floor = sqrt(n)
-    while (i < floor):
-        if is_divisible_by(n, i):
+    while (divisor < floor):
+        if is_divisible_by(n, divisor):
             return False
-        i += 2
+        divisor += 2
     return True
 
 
 def lcm(a: int, b: int) -> int:
     """ Return the least common divisor between a and b. """
     return int((a * b) / gcd(a, b))
+
+
+# def ln(x: float) -> float:
+#     """ Return the value of the natural logarithm of x. """
+#     if x <= 0:
+#         raise ValueError
+#     if x == 1:
+#         return 0
+
+#     # Computation with the Taylor serie of ln(x)
+#     result = 0
+#     for n in range((x + 15) * 2):
+#         result += (((x - 1) / (x + 1))**((2 * n) + 1)) / ((2 * n) + 1)
+#     return 2 * result
+
+
+# def log(x: float, base: int) -> float:
+#     """ Return the logarithm of x to the given base. """
+#     if base == 1:
+#         raise ValueError
+#     return ln(x) / ln(base)
+
+
+# def sin(x: float) -> float:
+#     """ Return the sine of x radians. """
+#     # The value of an angle can't be greater than 2*pi
+#     angle = x % (2 * pi)
+
+#     # Remarquable angles
+#     if angle == 0:
+#         return 0
+#     elif angle == pi / 2:
+#         return 1
+#     elif angle == pi:
+#         return 0
+#     elif angle == (3 * pi) / 2:
+#         return -1
+
+#     if pi / 2 < angle < (3 * pi) / 2:
+#         angle = -angle
+
+#     # Computation with the Taylor serie of sin(x)
+#     result = 0
+#     for n in range(16):
+#         result += (((-1)**n) / factorial(2 * n + 1)) * (angle**(2 * n + 1))
+#     return result
+
+
+# def tan(x: float) -> float:
+#     """ Return the tangent of x radians. """
+#     if (x % 2 * pi) == ((pi / 2) or ((3 * pi) / 2)):
+#         raise ValueError
+#     return sin(x) / cos(x)
 
 
 @todo_implement
@@ -194,6 +307,7 @@ def get_all_coprime_with(n: int) -> list:
     pass
 
 
+@todo_implement
 def get_the_number_of_coprime_with(n: int) -> int:
     """ This function use the Euler's totient function formula
         and return the number of integers coprime with n.
@@ -205,6 +319,7 @@ def get_the_number_of_coprime_with(n: int) -> int:
     return int(phi_n)
 
 
+@todo_implement
 def get_product_of_primes_factors_form_of(n: int) -> list:
     """ Every integer n can be written in the form of an unique
         product of primes factors.
@@ -227,6 +342,7 @@ def get_product_of_primes_factors_form_of(n: int) -> list:
     return primes_factor
 
 
+@todo_implement
 def print_product_of_primes_factors_form_of(n: int) -> None:
     """ This function is meant to be used with the
         get_product_of_primes_factors_form_of function.
