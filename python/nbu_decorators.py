@@ -3,11 +3,11 @@ def change_stack_depth(new_size: int) -> callable:
         then reset its original value after calling the function.
     """
     def real_decorator(function: callable) -> callable:
-        def wrapper(*args):
+        def wrapper(*args, **kwargs):
             from sys import setrecursionlimit, getrecursionlimit
             old_size = getrecursionlimit()
             setrecursionlimit(new_size)
-            result = function(*args)
+            result = function(*args, **kwargs)
             setrecursionlimit(old_size)
             return result
         return wrapper
@@ -61,12 +61,12 @@ def memoize(function: callable) -> callable:
     cache = {}
     miss = object()
 
-    def wrapper(*args):
+    def wrapper(*args, **kwargs):
         # If the result as already be calculated, it's a hit
         result = cache.get(args, miss)
         if result is miss:
             # Else, we call the original function and cache it's result
-            result = function(*args)
+            result = function(*args, **kwargs)
             cache[args] = result
         return result
     return wrapper
@@ -283,7 +283,7 @@ def set_stdin_from_file(new_stdin: str, mode: str = 'r') -> callable:
 
 @todo_implement
 def force_typing(function: callable, *types: type) -> callable:
-    """ Throw an exception if the types of the args are differents than the
+    """ Throw an exception if the types in the args are differents than the
         types in 'types'.
     """
     def wrapper(*args, **kwargs):
