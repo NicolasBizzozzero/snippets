@@ -91,6 +91,20 @@ def print_warning(*reasons: str) -> callable:
     return real_decorator
 
 
+def quiet(function: callable) -> callable:
+    """ Redirect stdout to nothing. """
+    def wrapper(*args, **kwargs):
+        from os import devnull
+        import sys
+
+        previous_stdout = sys.stdout
+        sys.stdout = open(devnull, 'w')
+        result = function(*args, **kwargs)
+        sys.stdout = previous_stdout
+        return result
+    return wrapper
+
+
 def time_this(function: callable) -> callable:
     """ Print the execution time of the wrapped function. """
     def wrapper(*args, **kwargs):
@@ -221,10 +235,56 @@ def print_result(function: callable) -> callable:
     return wrapper
 
 
+def set_stdout_to_file(new_stdout: str, mode: str = 'w') -> callable:
+    """ Temporary change stdout to the file value passed as argument. """
+    def real_decorator(function: callable) -> callable:
+        def wrapper(*args):
+            import sys
+
+            previous_stdout = sys.stdout
+            sys.stdout = open(new_stdout, mode)
+            result = function(*args)
+            sys.stdout = previous_stdout
+            return result
+        return wrapper
+    return real_decorator
+
+
+def set_stdin_from_str(new_stdin: str) -> callable:
+    """ Temporary change stdin to the string value passed as argument. """
+    def real_decorator(function: callable) -> callable:
+        def wrapper(*args):
+            import sys
+            from io import StringIO
+
+            previous_stdin = sys.stdin
+            sys.stdin = StringIO(new_stdin)
+            result = function(*args)
+            sys.stdin = previous_stdin
+            return result
+        return wrapper
+    return real_decorator
+
+
+def set_stdin_from_file(new_stdin: str, mode: str = 'r') -> callable:
+    """ Temporary change stdin to the file value passed as argument. """
+    def real_decorator(function: callable) -> callable:
+        def wrapper(*args):
+            import sys
+
+            previous_stdin = sys.stdin
+            sys.stdin = open(new_stdin, mode)
+            result = function(*args)
+            sys.stdin = previous_stdin
+            return result
+        return wrapper
+    return real_decorator
+
+
 @todo_implement
 def force_typing(function: callable, *types: type) -> callable:
-    """ Throw an exception if the types of the args are differents the types
-        in 'types'.
+    """ Throw an exception if the types in the args are differents than the
+        types in 'types'.
     """
     def wrapper(*args, **kwargs):
         # Instructions here will be executed before calling the function
@@ -232,16 +292,6 @@ def force_typing(function: callable, *types: type) -> callable:
         # Instructions here will be executed after calling the function
         return result
     return wrapper
-
-
-@todo_implement
-def get_input_from_file():
-    pass
-
-
-@todo_implement
-def redirect_output_to_file():
-    pass
 
 
 if __name__ == '__main__':
