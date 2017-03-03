@@ -143,11 +143,14 @@ def generate_primes_in_range(floor: int, ceil: int) -> list:
     return [i for i, v in enumerate(primes, floor) if v]
 
 
-def get_divisors_of(n: int) -> list:
+def get_divisors_of(n: int, proper: bool = True) -> list:
     """ Return a list containing all the divisors of n. """
     if (n <= 0):
         n = abs(n)
-    divisors = [1, n]
+    if proper:
+        divisors = [1]
+    else:
+        divisors = [1, n]
     ceil = int(sqrt(n))
     for i in range(ceil, 1, -1):
         if is_divisible_by(n, i):

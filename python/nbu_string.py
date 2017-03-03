@@ -92,6 +92,23 @@ def is_a_palindrome(string: str) -> bool:
                                                             False)).lower())
 
 
+@todo_compare
+def is_a_palindrome_dynamic_approach(string: str) -> bool:
+    """ Dynamic programming approach of the palindromy of a string problem. """
+    if len(string) <= 0:
+        return True
+
+    i, j = 0, len(string) - 1
+    while i != j:
+        if j == i + 1:
+            return string[i] == string[j]
+        if string[i] != string[j]:
+            return False
+        i += 1
+        j -= 1
+    return True
+
+
 def concatenation(*strings: str) -> str:
     """ Return the concatenation of all str passed as input, or an empty string
     if nothing has been passed.
