@@ -92,13 +92,14 @@ def is_a_palindrome(string: str) -> bool:
                                                             False)).lower())
 
 
-def concatenation(string1: str, string2: str) -> str:
-    """ Return the concatenation of string1 and string2. """
-    if string1 is None:
-        string1 = ""
-    if string2 is None:
-        string2 = ""
-    return "{}{}".format(string1, string2)
+def concatenation(*strings: str) -> str:
+    """ Return the concatenation of all str passed as input, or an empty string
+    if nothing has been passed.
+    """
+    result = ""
+    for string in strings:
+        result = "{}{}".format(result, string)
+    return result
 
 
 if __name__ == '__main__':

@@ -279,5 +279,34 @@ def extract_last_line(filepath: str) -> str:
     return last_line
 
 
+def is_file_existing(filename: str) -> bool:
+    """ Return True if the file exists, False otherwise. """
+    import os.path
+    return os.path.isfile(filename)
+
+
+def get_extension(filename: str) -> str:
+    """ Return the extension of a file without the dot.
+
+        Examples :
+        >>> get_extension("hello_world.py")
+        py
+        >>> get_extension("hello_world")
+
+        >>> get_extension("hello_world.txt.py")
+        py
+        >>> get_extension("hello_world.txt.c.py")
+        py
+    """
+    import os
+    return os.path.splitext(filename)[1][1:]
+
+
+def get_size(filepath: str) -> int:
+    """ Return the size of a file, in bytes. """
+    import os
+    return os.stat(filepath).ST_SIZE
+
+
 if __name__ == '__main__':
     pass
