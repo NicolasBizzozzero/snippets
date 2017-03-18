@@ -234,8 +234,8 @@ def is_prime(n: int) -> bool:
     if (n <= 1 or (is_even(n) and n != 2)):
         return False
     divisor = 3
-    floor = sqrt(n)
-    while (divisor < floor):
+    ceil = sqrt(n)
+    while (divisor < ceil):
         if is_divisible_by(n, divisor):
             return False
         divisor += 2
