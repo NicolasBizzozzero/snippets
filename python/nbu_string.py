@@ -115,7 +115,7 @@ def concatenation(*strings: str) -> str:
     """
     result = ""
     for string in strings:
-        result = "{}{}".format(result, string)
+        result = "{0}{1}".format(result, string)
     return result
 
 

@@ -1,5 +1,4 @@
 """
-
 Sending mails behind a proxy with the smtp protocol can be tricky.
 A few links to help you achieve this:
 Python smtplib proxy support - Stack Overflow

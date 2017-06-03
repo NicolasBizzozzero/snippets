@@ -1,6 +1,7 @@
 from math import gcd, sqrt, factorial, cos, sin, tan, exp, log
 from nbu_decorators import *
 from random import randint, random
+import itertools
 
 
 pi = 3.141592653589793238462643383279502884197169399375105820974944592307816406
@@ -358,6 +359,18 @@ def print_product_of_primes_factors_form_of(n: int) -> None:
         string += str(prime) + "^" + \
             str(product_of_primes_factors[prime]) + " x "
     print(str(n), "=", string[:-3])
+
+
+def even_naturals(start: int = 0) -> iter:
+    if (start % 2) == 1:
+        raise ValueError("Start is not an even number")
+    return itertools.count(start=start, step=2)
+
+
+def odd_naturals(start: int = 1) -> iter:
+    if (start % 2) == 0:
+        raise ValueError("Start is not an odd number")
+    return itertools.count(start=start, step=2)
 
 
 if __name__ == '__main__':
