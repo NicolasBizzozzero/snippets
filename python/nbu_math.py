@@ -2,9 +2,26 @@ from math import gcd, sqrt, factorial, cos, sin, tan, exp, log
 from nbu_decorators import *
 from random import randint, random
 import itertools
+from typing import Union
 
+Number = Union[int, float, complex]
 
 pi = 3.141592653589793238462643383279502884197169399375105820974944592307816406
+π = pi
+
+
+def delta(x: Number, y: Number) -> Number:
+    """ Return the difference between two numbers. """
+    return abs(x - y)
+
+Δ = delta
+
+
+def round_float(f: float, ε: float = 0.000000000000001) -> float:
+    """ Round a float if it's very close to an integer. Else, do nothing and return it. """
+    if Δ(round(f), f) < ε:
+        return round(f)
+    return f
 
 
 def are_coprime(a: int, b: int) -> bool:
@@ -13,7 +30,6 @@ def are_coprime(a: int, b: int) -> bool:
         the only positive integer that divide both of them is 1.
     """
     return gcd(a, b) == 1
-
 
 # def cos(x: float) -> float:
 #     """ Return the cosine of x radians. """
