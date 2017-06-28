@@ -17,10 +17,10 @@ def delta(x: Number, y: Number) -> Number:
 Δ = delta
 
 
-def round_float(f: float, ε: float = 0.000000000000001) -> float:
+def round_float(f: float, ε: float = 0.000000000000001) -> Union[int, float]:
     """ Round a float if it's very close to an integer. Else, do nothing and return it. """
     if Δ(round(f), f) < ε:
-        return round(f)
+        return int(round(f))
     return f
 
 
