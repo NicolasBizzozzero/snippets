@@ -11,14 +11,27 @@ pi = 3.141592653589793238462643383279502884197169399375105820974944592307816406
 
 
 def delta(x: Number, y: Number) -> Number:
-    """ Return the difference between two numbers. """
+    """ Return the difference between two numbers.
+
+        Example :
+        >>> delta(1, 2)
+        1
+        >>> delta(2, 1)
+        1
+    """
     return abs(x - y)
 
 Δ = delta
 
 
 def round_float(f: float, ε: float = 0.000000000000001) -> Union[int, float]:
-    """ Round a float if it's very close to an integer. Else, do nothing and return it. """
+    """ Round a float if it's very close to an integer. Else, do nothing and return it.
+        Example :
+        >>> round_float(0.9999999999999999)
+        1
+        >>> round_float(0.9999999999999998)
+        0.9999999999999998
+    """
     if Δ(round(f), f) < ε:
         return int(round(f))
     return f
