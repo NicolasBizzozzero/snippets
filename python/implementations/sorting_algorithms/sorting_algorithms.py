@@ -232,6 +232,32 @@ def bogobogosort(lst):
     return lst
 
 
+def sleep_sort(array: int) -> None:
+    """ Sort the array in-place using the sleep sort algorithm.
+        The sleep sort algorithm create a thread for each element of the array,
+        and make them sleep for an amount of time corresponding to the element
+        value. After this time, the thread append themself to the list.
+    """
+    from threading import Timer
+
+    # Construct all threads
+    threads = []
+    for value in array:
+        threads.append(Timer(value, lambda array,
+                             value: array.append(value), (array, value)))
+
+    # Clean the array
+    del array[:]
+
+    # Start all threads
+    for thread in threads:
+        thread.start()
+
+    # Wait for all of them to finish
+    for thread in threads:
+        thread.join()
+
+
 def isSorted(lst):
     prev = None
     for x in lst:

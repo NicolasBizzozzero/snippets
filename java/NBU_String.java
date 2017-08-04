@@ -28,4 +28,27 @@ public abstract class MaString {
 		}
 		return occurences;
 	}
+
+
+    /**
+     * Return "str" but reversed.
+     *
+     * Example :
+     * >>> print(reversed("Hello World !"));
+     * "! dlroW olleH" 
+     */
+    public static String reversed(String str){
+        char[] input = str.toCharArray();
+        int begin = 0;
+        int end = input.length - 1;
+        char temp;
+        while (end > begin){
+            temp = input[begin];
+            input[begin] = input[end];
+            input[end] = temp;
+            end--;
+            begin++;
+        }
+        return new String(input);
+    }
 }

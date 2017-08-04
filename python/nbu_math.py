@@ -390,6 +390,21 @@ def print_product_of_primes_factors_form_of(n: int) -> None:
     print(str(n), "=", string[:-3])
 
 
+def eulers_totient(n: int) -> int:
+    """ Return the value of the Euler's totient of n. """
+    primes_who_divide_n = get_divisors_of(n)
+
+    # Removes all non-primes from the list
+    for number in primes_who_divide_n:
+        if not is_prime(number):
+            primes_who_divide_n.remove(number)
+
+    product = 1
+    for prime in primes_who_divide_n:
+        product *= (1 - (1 / prime))
+    return n * product
+
+
 def even_naturals(start: int = 0) -> iter:
     if (start % 2) == 1:
         raise ValueError("Start is not an even number")
