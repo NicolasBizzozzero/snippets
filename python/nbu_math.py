@@ -118,9 +118,9 @@ def fibonacci(n: int) -> int:
 
 # def gcd(a: int, b: int) -> int:
 #     """ Return the greatest common divisor between a and b. """
-#     while a % b != 0:
-#         a, b = b, (a % b)
-#     return b
+#     while b > 0:
+#         a, b = b, a % b
+#     return a
 
 
 def generate_primes(ceil: int) -> list:
@@ -367,9 +367,9 @@ def get_product_of_primes_factors_form_of(n: int) -> list:
         return primes_factor
     for i in range(2, n + 1):
         while (is_divisible_by(n, i)):
-            if (i in primes_factor):
+            try:
                 primes_factor[i] += 1
-            else:
+            except KeyError:
                 primes_factor[i] = 1
             n /= i
     return primes_factor
