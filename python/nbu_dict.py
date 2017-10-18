@@ -18,7 +18,6 @@ def count_chars(string: str) -> dict:
     return char_dic
 
 
-@todo_implement
 def count_words(string: str) -> dict:
     """ Return a dictionary containing all the words from string as keys, and
         the number of time they appear as values. Ignore punctuations.
@@ -26,9 +25,13 @@ def count_words(string: str) -> dict:
         >>> count_words("Hello my friend.")
         {"Hello": 1, "my": 1, "friend": 1}
     """
-    if not string:
-        return {}
-    pass
+    dictionary = dict()
+    for word in string.split():
+        try:
+            dictionary[word] += 1
+        except KeyError:
+            dictionary[word] = 1
+    return dictionary
 
 
 def lower_chars_of_dict(dictionary: dict) -> None:
