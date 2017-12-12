@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
 
 def remove_outliers(dataframe, column, tolerance):
@@ -20,9 +21,14 @@ def fill_values(dataframe, value_to_fill, filling_value=np.nan,
                                  filling_value).fillna(method=method)
 
 
+def correlation_heatmap(dataframe):
+    """ Compute and show a correlation heatmap for all attribute in
+    `dataframe`.
+    """
+    correlation = dataframe.corr()
+    sns.heatmap(correlation, xticklabels=correlation.columns.values,
+                yticklabels=correlation.columns.values)
+
+
 if __name__ == '__main__':
-    import glob
-    dfs = [pd.read_csv(file_name, parse_dates=['creationdate'])
-           for file_name in glob.glob('../data/stackoverflow/*.csv')]
-    df = pd.concat(dfs)
-    df.head()
+    pass
