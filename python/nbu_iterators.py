@@ -231,5 +231,16 @@ def random_combination_with_replacement(iterable, r):
     return tuple(pool[i] for i in indices)
 
 
+def chunk(iterable, pieces):
+    """ Eclate les données passées en `exemplaires` d'approximativement la
+    même taille. """
+    if pieces < 1:
+        return []
+    iterables = [[] for _ in range(pieces)]
+    for index, element in enumerate(iterable):
+        iterables[index % pieces].append(element)
+    return iterables
+
+
 if __name__ == '__main__':
     pass
