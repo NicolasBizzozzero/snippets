@@ -2,6 +2,7 @@
 #include <string.h>
 #define __FILENAME_WIN__ (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__) // WINDOWS
 #define __FILENAME_LIN__ (strrchr(__FILE__, '/') ? strrchr(__FILE__, '/') + 1 : __FILE__) // LINUX
+#define ARRAY_SIZE(array) (sizeof(array) / sizeof(array[0]))
 
 enum OS = {WINDOWS, LINUX};
 
