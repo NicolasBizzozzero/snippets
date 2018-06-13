@@ -1,13 +1,13 @@
 /**
  * Source : http://ascii-table.com/ansi-escape-sequences.php
  *
- * These sequences define functions that change display graphics, control cursor
- * movement, and reassign keys.
+ * These sequences define functions that change display graphics, control
+ * cursor movement, and reassign keys.
  *
  * ANSI escape sequence is a sequence of ASCII characters, the first two of
  * which are the ASCII "Escape" character 27 (1Bh) and the left-bracket
- * character " [ " (5Bh). The character or characters following the escape and
- * left-bracket characters specify an alphanumeric code that controls a
+ * character " [ " (5Bh). The character or characters following the escape
+ * and left-bracket characters specify an alphanumeric code that controls a
  * keyboard or display function.
  *
  * ANSI escape sequences distinguish between uppercase and lowercase letters.
@@ -18,8 +18,9 @@
 
 /* Moves the cursor to the specified position (coordinates).
    If you do not specify a position, the cursor moves to the home position at
-   the upper-left corner of the screen (line 0, column 0). This escape sequence
-   works the same way as the following Cursor Position escape sequence. */
+   the upper-left corner of the screen (line 0, column 0). This escape
+   sequence works the same way as the following Cursor Position escape
+   sequence. */
 #define CURSOR_POSITION "\x1B[0;0H"
 #define CURSOR_POSITION2 "\x1B[0;0f"
 
@@ -33,9 +34,9 @@
    sequence. */
 #define CURSOR_DOWN "\x1B[1B"
 
-/* Moves the cursor forward by the specified number of columns without changing
-   lines. If the cursor is already in the rightmost column, ANSI.SYS ignores
-   this sequence. */
+/* Moves the cursor forward by the specified number of columns without 
+   hanging lines. If the cursor is already in the rightmost column, ANSI.SYS
+   ignores this sequence. */
 #define CURSOR_FORWARD "\x1B[1C"
 
 /* Moves the cursor back by the specified number of columns without changing
@@ -74,24 +75,24 @@
 #define CONCEALED "\x1B[8m"
 
 // Foreground colors
-#define BLACK "\x1B[30m"
-#define RED "\x1B[31m"
-#define GREEN "\x1B[32m"
-#define YELLOW "\x1B[33m"
-#define BLUE "\x1B[34m"
-#define MAGENTA "\x1B[35m"
-#define CYAN "\x1B[36m"
-#define WHITE "\x1B[37m"
+#define BLACK_FOREGROUND "\x1B[30m"
+#define RED_FOREGROUND "\x1B[31m"
+#define GREEN_FOREGROUND "\x1B[32m"
+#define YELLOW_FOREGROUND "\x1B[33m"
+#define BLUE_FOREGROUND "\x1B[34m"
+#define MAGENTA_FOREGROUND "\x1B[35m"
+#define CYAN_FOREGROUND "\x1B[36m"
+#define WHITE_FOREGROUND "\x1B[37m"
 
 // Background colors
-#define BLACK "\x1B[40m"
-#define RED "\x1B[41m"
-#define GREEN "\x1B[42m"
-#define YELLOW "\x1B[43m"
-#define BLUE "\x1B[44m"
-#define MAGENTA "\x1B[45m"
-#define CYAN "\x1B[46m"
-#define WHITE "\x1B[47m"
+#define BLACK_BACKGROUND "\x1B[40m"
+#define RED_BACKGROUND "\x1B[41m"
+#define GREEN_BACKGROUND "\x1B[42m"
+#define YELLOW_BACKGROUND "\x1B[43m"
+#define BLUE_BACKGROUND "\x1B[44m"
+#define MAGENTA_BACKGROUND "\x1B[45m"
+#define CYAN_BACKGROUND "\x1B[46m"
+#define WHITE_BACKGROUND "\x1B[47m"
 
 /* Set Mode:
    Esc[=Valueh
