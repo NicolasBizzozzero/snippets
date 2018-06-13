@@ -417,5 +417,15 @@ def odd_naturals(start: int = 1) -> iter:
     return itertools.count(start=start, step=2)
 
 
+def norm_p(vector, p: int) -> int:
+    """ Retourne la norme `p` d'un vecteur. """
+    if p == 1:
+        return sum([abs(x) for x in vector.T])
+    elif p == np.inf:
+        return max([abs(x) for x in vector.T])
+    else:
+        return sum([x ** p for x in vector.T]) ** (1 / p)
+
+
 if __name__ == '__main__':
     pass

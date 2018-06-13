@@ -15,7 +15,7 @@ char* get_current_directory(OS operating_system){
 	// We remove the name of the file
 	if (operating_system == WINDOWS)
 		remove_substring(current_directory, "\\dup_eraser.c");
-	else if (operating_system == LINU)
+	else if (operating_system == LINUX)
 		remove_substring(current_directory, "/dup_eraser.c");
 	
 	return current_directory;
