@@ -27,3 +27,22 @@ class PDF(object):
         inside it.
         """
         return r"\includegraphics[width=1.0\textwidth]{{{0}}}".format(self.path_to_pdf)
+
+    
+def plot_correlation_matrix(df, size=8, cmap="plasma", show=True):
+    """ Plot a graphical correlation matrix for each pair of columns in the dataframe.
+    
+    :param df: pandas DataFrame.
+    :param size: Vertical and horizontal size of the plot.
+    """
+    corr = df.corr()
+    fig, ax = plt.subplots(figsize=(size + 1, size))
+    img = ax.matshow(corr, cmap=cmap)
+    fig.colorbar(img, ax=ax)
+    ax.set_aspect('auto')
+    plt.xticks(rotation=90)
+    plt.xticks(range(len(corr.columns)), corr.columns)
+    plt.yticks(range(len(corr.columns)), corr.columns)
+
+    if show:
+        plt.show()
